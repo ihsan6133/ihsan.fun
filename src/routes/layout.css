@@ -1,1 +1,30 @@
 @import 'tailwindcss';
+
+@theme {
+    --font-display: "Lora", serif; 
+
+    @keyframes svelte-pop {
+        0% {
+        /* Replicating y: -10 without the opacity fade */
+            transform: translateY(20px);
+            opacity: 0;
+        }
+
+        100% {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+
+    /* - duration: 200ms (to match your Svelte code)
+        - easing: cubic-bezier(0.33, 1, 0.68, 1) (Matches Svelte's default 'cubicOut')
+    */
+    --animate-svelte-pop: svelte-pop 1000ms cubic-bezier(0.33, 1, 0.68, 1) forwards;
+}
+
+/* To prevent the text from "flickering" at its final position before 
+   the animation starts, we set its initial state.
+*/
+.animate-svelte-pop {
+    transform: translateY(20px);
+}
