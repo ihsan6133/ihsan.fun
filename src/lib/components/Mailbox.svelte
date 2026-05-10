@@ -1,46 +1,49 @@
 <script lang="ts">
+    import { enhance } from "$app/forms";
+    import { fly } from "svelte/transition";
 
-    import { tick } from 'svelte';
+
     let lidOpen = $state(false);
 
     let dialog: HTMLDialogElement|null = $state(null);
     let textArea: HTMLTextAreaElement|null = $state(null);
     let messageValue = $state('');
 
-    async function openLetter() {
+    function timeStampString() {
+        const date = new Date();
+        const dateOptions: Intl.DateTimeFormatOptions = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        }
+
+        const timeOptions: Intl.DateTimeFormatOptions = {
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true,
+        }
+
+        const formattedDate = new Intl.DateTimeFormat('en-US', dateOptions).format(date);
+        const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
+
+        return `${formattedDate}\n${formattedTime}\n`;
+    }
+
+    function openLetter() {
 
         if (messageValue.trim() == "") {
-            const date = new Date();
-            const dateOptions: Intl.DateTimeFormatOptions = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-            }
-    
-            const timeOptions: Intl.DateTimeFormatOptions = {
-                hour: 'numeric',
-                minute: '2-digit',
-                hour12: true,
-            }
-    
-            const formattedDate = new Intl.DateTimeFormat('en-US', dateOptions).format(date);
-            const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(date);
-    
-            let finalString = `${formattedDate}\n${formattedTime}\n\nFrom: `;
-            let i = finalString.length;
-
-            finalString += `you\nTo: Ihsan`;
-            messageValue = finalString;
             
-            await tick();
-            dialog?.show();
-            textArea?.focus();
-            textArea?.setSelectionRange(i, i+3);
+            let timeStamp = timeStampString();
 
-        } else {
-            dialog?.show();
-            textArea?.focus();
-        }
+            let finalString = `${timeStamp}\nFrom: `;
+
+            messageValue = finalString;
+              
+        }  
+        
+        dialog?.show();
+        textArea?.focus();
+        
 
     }
 </script>
@@ -86,30 +89,51 @@
 
 <dialog bind:this={dialog} class="z-10 bg-transparent fixed top-0 left-0  w-full h-full open:flex items-center justify-center p-6 py-10">
 
-    <div class="selection:bg-[#60450940] w-full h-full max-w-180 p-6 bg-amber-100 border-2 border-yellow-800 rounded-sm flex flex-col gap-4">
+    <form action="?/sendMessage" method="POST" use:enhance class="relative animate-svelte-pop selection:bg-[#60450940] w-full h-full max-w-180 p-6 pb-3 bg-amber-100 border-2 border-yellow-800 rounded-xs flex flex-col gap-4">
+        
+        <button type="button" class="absolute top-2 right-5 select-none text-2xl cursor-pointer font-semibold p-1" onclick={()=>{dialog?.close()}}>x</button>
+        <!-- <div class="flex justify-between items-center">
+            <h1 class="font-display text-xl">Send a message</h1>
+        </div> -->
+
+        <textarea bind:this={textArea} bind:value={messageValue} name="message" class="w-full grow text-[#482e03e6] font-display text-lg bg-local bg-[repeating-linear-gradient(transparent,transparent_27px,#9a5c00_27px,#000000_28px)]"></textarea>
 
         <div class="flex justify-between items-center">
-            <h1 class="font-display text-2xl">Send a message</h1>
-            <button class="select-none text-2xl cursor-pointer font-semibold p-1" onclick={()=>{dialog?.close()}}>x</button>
+            <div class="flex gap-2">
+                <button type="button" class="cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]" onclick={()=>{messageValue="", textArea?.focus();}}>
+                    <span class="text-white font-display">Clear</span>
+                </button>
+                <button type="button" class="cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]" onclick={()=>{messageValue += timeStampString(); textArea?.focus();}}>
+                    <span class="text-white font-display">Add Timestamp</span>
+                </button>
+            </div>
+            <button type="submit" class="flex items-center gap-1 cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]">
+                <span class="text-white font-display">Send</span>
+                <svg height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 21V15M19 15L17 17M19 15L21 17M21 11V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.0799 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.0799 19 6.2 19H13M20.6067 8.26229L15.5499 11.6335C14.2669 12.4888 13.6254 12.9165 12.932 13.0827C12.3192 13.2295 11.6804 13.2295 11.0677 13.0827C10.3743 12.9165 9.73279 12.4888 8.44975 11.6335L3.14746 8.09863" stroke="#ededed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                
+            </button>
         </div>
-        <textarea bind:this={textArea} bind:value={messageValue} name="message" class="w-full grow font-display text-lg bg-local bg-[repeating-linear-gradient(transparent,transparent_27px,#9a5c00_27px,#000000_28px)]"></textarea>
 
-    </div>
+    </form>
 </dialog>
 
 <style>
     textarea {
-  /* This removes the blue border box */
-  outline: none;
-  
-  /* Optional: removes the standard border too */
-  border: none;
-  
-  /* Makes sure the cursor is visible and has a specific color */
-  caret-color: black; 
-  
-  /* Optional: disables the drag-to-resize handle in the corner */
-  resize: none; 
-}
+    /* This removes the blue border box */
+    outline: none;
+    
+    /* Optional: removes the standard border too */
+    border: none;
+    
+    /* Makes sure the cursor is visible and has a specific color */
+    caret-color: black; 
+    
+    /* Optional: disables the drag-to-resize handle in the corner */
+    resize: none; 
+    }
+
+    textarea {
+        scrollbar-color: #987a4c transparent; /* thumb color and track color */
+        scrollbar-width: thin;
+    }
 
 </style>

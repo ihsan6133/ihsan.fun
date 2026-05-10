@@ -56,7 +56,7 @@
 <div class="h-30 bg-zinc-700">
 
 </div>
-
+<!-- 
 <div class="absolute top-0 left-0 w-full h-screen pointer-events-none overflow-hidden" >
     <Glider/>
-</div>
+</div> -->

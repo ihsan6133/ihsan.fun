@@ -19,7 +19,7 @@
     /* - duration: 200ms (to match your Svelte code)
         - easing: cubic-bezier(0.33, 1, 0.68, 1) (Matches Svelte's default 'cubicOut')
     */
-    --animate-svelte-pop: svelte-pop 1000ms cubic-bezier(0.33, 1, 0.68, 1) forwards;
+    --animate-svelte-pop: svelte-pop 800ms cubic-bezier(0.33, 1, 0.68, 1) forwards;
 }
 
 /* To prevent the text from "flickering" at its final position before 
