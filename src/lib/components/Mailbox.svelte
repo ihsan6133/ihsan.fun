@@ -117,7 +117,7 @@
 
         <textarea bind:this={textArea} bind:value={messageValue} name="message" class="w-full grow text-[#482e03e6] font-display text-base bg-local bg-[repeating-linear-gradient(transparent,transparent_23px,#9a5c00_23px,#000000_24px)]"></textarea>
 
-        <div class="flex justify-between items-center">
+        <div class="flex justify-between items-cente flex-wrap gap-2">
             <div class="flex gap-2">
                 <button type="button" class="cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]" onclick={()=>{messageValue="", textArea?.focus();}}>
                     <span class="text-white font-display">Clear</span>
@@ -126,10 +126,13 @@
                     <span class="text-white font-display">Add Timestamp</span>
                 </button>
             </div>
-            <button type="submit" class="flex items-center gap-1 cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]">
-                <span class="text-white font-display">Send</span>
-                <svg height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 21V15M19 15L17 17M19 15L21 17M21 11V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.0799 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.0799 19 6.2 19H13M20.6067 8.26229L15.5499 11.6335C14.2669 12.4888 13.6254 12.9165 12.932 13.0827C12.3192 13.2295 11.6804 13.2295 11.0677 13.0827C10.3743 12.9165 9.73279 12.4888 8.44975 11.6335L3.14746 8.09863" stroke="#ededed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                
-            </button>
+            <div class="flex gap-2 flex-wrap">
+                <input type="email" name="email" placeholder="Your Email (Optional)" class="border-2 border-[#7c520eb5] rounded-xs py-1 px-2 text-[#482e03e6] font-display ">
+                <button type="submit" class="flex items-center gap-1 cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]">
+                    <span class="text-white font-display">Send</span>
+                    <svg height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M19 21V15M19 15L17 17M19 15L21 17M21 11V8.2C21 7.0799 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.0799 3 8.2V15.8C3 16.9201 3 17.4802 3.21799 17.908C3.40973 18.2843 3.71569 18.5903 4.09202 18.782C4.51984 19 5.0799 19 6.2 19H13M20.6067 8.26229L15.5499 11.6335C14.2669 12.4888 13.6254 12.9165 12.932 13.0827C12.3192 13.2295 11.6804 13.2295 11.0677 13.0827C10.3743 12.9165 9.73279 12.4888 8.44975 11.6335L3.14746 8.09863" stroke="#ededed" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                
+                </button>
+            </div>
         </div>
 
     </form>
