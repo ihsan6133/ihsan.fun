@@ -1,4 +1,5 @@
 <script lang="ts">
+    import Construction from "$lib/components/Construction.svelte";
     import Glider from "$lib/components/Glider.svelte";
     import Mailbox from "$lib/components/Mailbox.svelte";
     import { getAge } from "$lib/utils";
@@ -7,7 +8,7 @@
     let age = $state(getAge(DOB));
     
 </script>
-<div class="container h-screen max-w-screen bg-linear-to-b from-sky-400 to-zinc-50 flex flex-col justify-between">
+<div class="container  max-w-screen bg-linear-to-b from-sky-400 to-zinc-50 flex flex-col justify-between">
     <div class="p-6 pt-25 max-w-180 w-full mx-auto  flex flex-col justify-center">
         <h1  translate="no" class="animate-svelte-pop text-4xl  font-display text-zinc-700 text-shadow-lg">Ihsan</h1>
         
@@ -16,12 +17,22 @@
     
         <p class="animate-svelte-pop font-display text-md leading-7  text-zinc-800 mt-10">
             Hello there! I'm Ihsan, and welcome to my small corner on the internet. I enjoy making cool things, especially on computers. 
+            Through this site, I'd like to share a bit about myself, my works, and the things I find interesting.
         </p>
+        <p class="animate-svelte-pop font-display text-md leading-7  text-zinc-800 mt-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum excepturi quaerat doloremque, ratione perferendis deleniti consequatur, iusto porro animi sint maxime totam blanditiis sit sed minima id deserunt. Placeat, debitis?
+        </p>
+        <!-- <p class="animate-svelte-pop font-display text-md leading-7  text-zinc-800 mt-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum excepturi quaerat doloremque, ratione perferendis deleniti consequatur, iusto porro animi sint maxime totam blanditiis sit sed minima id deserunt. Placeat, debitis?
+        </p>
+        <p class="animate-svelte-pop font-display text-md leading-7  text-zinc-800 mt-6">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum excepturi quaerat doloremque, ratione perferendis deleniti consequatur, iusto porro animi sint maxime totam blanditiis sit sed minima id deserunt. Placeat, debitis?
+        </p> -->
     </div>
 
     <div >
-        <div class="max-w-180 w-full mx-auto px-6 flex justify-end">
-            
+        <div class="max-w-180 w-full mx-auto px-6 flex justify-between items-end">
+            <Construction/>
             <Mailbox/>
         </div>
         <div class="h-20 bg-[rgb(66,200,113)] shadow-[0_-10px_0px_0px_rgb(132,244,166),0px_-12px_0px_0px_rgba(0,0,0,1)]">
