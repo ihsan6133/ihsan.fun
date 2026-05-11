@@ -1,13 +1,21 @@
 <script lang="ts">
     import { enhance } from "$app/forms";
+    import { onMount } from "svelte";
     import { fly } from "svelte/transition";
+    
 
-
+    let isMobile = $state(false);
     let lidOpen = $state(false);
 
     let dialog: HTMLDialogElement|null = $state(null);
     let textArea: HTMLTextAreaElement|null = $state(null);
     let messageValue = $state('');
+
+    function safeFocus(e: HTMLElement|null) {
+        if (!isMobile && e) {
+            e.focus();
+        }
+    }
 
     function timeStampString() {
         const date = new Date();
@@ -42,10 +50,15 @@
         }  
         
         dialog?.show();
-        textArea?.focus();
+        safeFocus(textArea);
         
 
     }
+
+    onMount(()=>{
+        // to prevent annoying keyboard popup on mobile devices.
+        isMobile = window.matchMedia("(pointer: coarse)").matches;
+    })
 </script>
 
 <div  class="relative w-40" >
@@ -119,10 +132,10 @@
 
         <div class="flex justify-between items-cente flex-wrap gap-2">
             <div class="flex gap-2">
-                <button type="button" class="cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]" onclick={()=>{messageValue="", textArea?.focus();}}>
+                <button type="button" class="cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]" onclick={()=>{messageValue="", safeFocus(textArea);}}>
                     <span class="text-white font-display">Clear</span>
                 </button>
-                <button type="button" class="cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]" onclick={()=>{messageValue += timeStampString(); textArea?.focus();}}>
+                <button type="button" class="cursor-pointer bg-[#7c520eb5] py-1 px-2 rounded-xs hover:bg-[#573807cf]" onclick={()=>{messageValue += timeStampString(); safeFocus(textArea);}}>
                     <span class="text-white font-display">Add Timestamp</span>
                 </button>
             </div>
